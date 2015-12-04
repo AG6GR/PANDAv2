@@ -6,7 +6,7 @@
 **D**rug
 **A**ssistant
 
-<img src=/doc/PANDA.png width="300">
+<img src=/img/PANDA.png width="300">
 
 PANDA is a smart pillbox that reminds you when to take your medicine! Using the web interface, you can tell PANDA when to remind you. PANDA can take either a list of times or set period between reminders.
 
