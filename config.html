@@ -186,12 +186,55 @@
 
 		<!--Script that transfers data from the text fields then sends them to the Electric Imp-->
 		<script>
+			function getSelectedValue(radios) {
+				for (var index = 0; index < radios.length; index++) {
+					if (radios[index].checked) {
+						return radios[index].value;
+					}
+				}
+				return "";
+			}
 			function submit() {
 				var numberForms = document.forms.length;
-				for (var index = 0; index < numberForms; index++) {
-					alert(document.forms[index].id);
-				}
 				
+				/* Acceptable requests:
+				 * Start-Frequency: ?id=#&start=HH:MM&freqH=##&freqM=##
+				 * Time list: ?id=#&time=HH:MM,HH:MM,HH:MM...
+				 */
+				
+				for (var i = 0; i < numberForms; i++) {
+					var currentform = document.forms[i];
+					var url = "https://agent.electricimp.com/GwKj0KXkZ0CO?";
+					var body = "";
+					
+					if (currentform.prescription.value != "")
+					{
+						url += "id=" + i;
+						if (getSelectedValue(currentform.type) == "hour") {
+							// Start-frequency representation
+							url += "&start=" + currentform.start.value;
+							url += "&freqH=" + currentform.freqH.value;
+							url += "&freqM=" + currentform.freqM.value;
+						} else {
+							// Time list representation
+							url += "&time=" + currentform.time.value;
+						}
+						
+						// Make request
+						console.log("POSTing: " + url);
+						console.log("\t Body:" + currentform.prescription.value);
+						var xhttp;
+						if (window.XMLHttpRequest) {
+							xhttp = new XMLHttpRequest();
+							} else {
+							// code for IE6, IE5
+							xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						xhttp.open("POST", url, true);
+						xhttp.send(currentform.prescription.value);
+					}
+				}
+				/*
 				var rx1 = document.getElementById("rx1").value.trim();
 				var box1doseh = document.getElementById("box1doseh").value.trim();
 				var box1dosem = document.getElementById("box1dosem").value.trim();
@@ -233,7 +276,7 @@
 				console.log(send); 
 				window.open(send); 
 				window.confirm("Thank you for configuring your PANDA"); 
-	
+				*/
 			}
 		</script>
 
