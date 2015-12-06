@@ -3,239 +3,238 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-    <title>PANDA</title>
+	<title>PANDA</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap Core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/stylish-portfolio.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<link href="css/stylish-portfolio.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+	<!-- Custom Fonts -->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 
-    </head>
+	</head>
 
-    <body>
+	<body>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">PANDA</a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="index.html">About</a>
-                        </li>
-                        <li>
-                            <a href="test.html">Test it out!</a>
-                        </li>
-                        <li>
-                            <a href="applications.html">Applications</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container -->
-        </nav>
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">PANDA</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="index.html">About</a>
+						</li>
+						<li>
+							<a href="test.html">Test it out!</a>
+						</li>
+						<li>
+							<a href="applications.html">Applications</a>
+						</li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+			<!-- /.container -->
+		</nav>
 
-        <!-- PANDA Set Up Page -->
-        <!--Takes values for the name of drug and doseage information that gets conveyed to the Electric Imp -->
-        <section id="about" class="about">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 text-right">
-                        <h2>Set Up PANDA</h2>
-                        <form>
-                            <fieldset id="group1">
-                                <div class="col-md-4 text-right">
-                                    <h3>Box 1: </h3>
-                                </div>
-                                <div class="col-md-4 text-center">
+		<!-- PANDA Set Up Page -->
+		<!--Takes values for the name of drug and doseage information that gets conveyed to the Electric Imp -->
+		<section id="about" class="about">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 text-right">
+						<h2>Set Up PANDA</h2>
+						<form>
+							<fieldset id="group1">
+								<div class="col-md-4 text-right">
+									<h3>Box 1: </h3>
+								</div>
+								<div class="col-md-4 text-center">
+									<h3><label class="sr-only" for="rx1">Prescription</label></h3>
+									<input type="text" class="form-control" id="rx1" placeholder="Prescription">
+									<input type="text" class="form-control" id="rx1details" placeholder="Details">
+								</div>
+								<div class="col-md-4 text-left">
+									<div class="radio" >
+										<label><input type="radio" checked name="optradio" id="dose1">Dose by the hour</label>
+									</div>
+									<label class="sr-only" for="box1doseh">Hours between doses</label>
+									<input type="text" class="form-control" id="box1doseh" placeholder="Hours between doses">
+										<p>Example: 5</p>
+									<label class="sr-only" for="box1dosem">Hours between doses</label>
+									<input type="text" class="form-control" id="box1dosem" placeholder="Minutes between doses">
+										<p>Example: 30</p>
+									<label class="sr-only" for="start1">Start Time</label>
+									<input type="text" class="form-control" id="start1" placeholder="Start Time">
+										<p>24 hour time Example: 06:00</p>
+									<div class="radio">
+										<label><input type="radio" name="optradio" id="day1">Dose by time of day</label>
+									</div>
+									<label class="sr-only" for="box1time">Times for doses</label>
+									<input type="text" class="form-control" id="box1time" placeholder="Time of doses">
+										<p>hh:mm Example: 06:00,12:00,18:00</p>
+								</div>
+							  </fieldset> 
+						  
+							<fieldset id="group2">
+								<div class="col-md-4 text-right">
+									<h3>Box 2: </h3>
+								</div>
+								<div class="col-md-4 text-center">
 
-                                    <h3><label class="sr-only" for="rx1">Prescription</label>
-                                        <input type="text" class="form-control" id="rx1" placeholder="Prescription"> <h3>
-                                    </div>
-                                    <div class="col-md-4 text-left">
-                                        <div class="radio" >
-                                          <label><input type="radio" checked name="optradio" id="dose1">Dose by the hour</label>
-                                      </div>
-                                      <label class="sr-only" for="box1doseh">Hours between doses</label>
-                                      <input type="text" class="form-control" id="box1doseh" placeholder="Hours between doses">
-                                      <p>Example: 5</p>
-                                      <label class="sr-only" for="box1dosem">Hours between doses</label>
-                                      <input type="text" class="form-control" id="box1dosem" placeholder="Minutes between doses">
-                                      <p>Example: 30</p>
-                                      <label class="sr-only" for="start1">Start Time</label>
-                                      <input type="text" class="form-control" id="start1" placeholder="Start Time">
-                                      <p>24 hour time Example: 06:00</p>
-                                      <div class="radio">
-                                          <label><input type="radio" name="optradio" id="day1">Dose by time of day</label>
-                                      </div>
-                                      <label class="sr-only" for="box1time">Times for doses</label>
-                                      <input type="text" class="form-control" id="box1time" placeholder="Time of doses">
-                                      <p>hh:mm Example: 06:00,12:00,18:00</p>
-                                  </div>
-                              </fieldset> 
-                          </form>
-                          <form>
-                            <fieldset id="group2">
-                                <div class="col-md-4 text-right">
-                                    <h3>Box 2: </h3>
-                                </div>
-                                <div class="col-md-4 text-center">
+									<h3><label class="sr-only" for="rx2">Prescription</label>
+										<input type="text" class="form-control" id="rx2" placeholder="Prescription"> <h3>
+									</div>
+									<div class="col-md-4 text-left">
+										<div class="radio">
+										  <label><input type="radio" checked name="optradio" id="dose2">Dose by the hour</label>
+									  </div>
+									  <label class="sr-only" for="box2doseh">Hours between doses</label>
+									  <input type="text" class="form-control" id="box2doseh" placeholder="Hours between doses">
+									  <p>Example: 5</p>
+									  <label class="sr-only" for="box2dosem">Minutes between doses</label>
+									  <input type="text" class="form-control" id="box2dosem" placeholder="Minutes between doses">
+									  <p>Example: 30</p>
+									  <label class="sr-only" for="start2">Start Time</label>
+									  <input type="text" class="form-control" id="start2" placeholder="Start Time">
+									  <p>24 hour time Example: 06:00</p>
+									  <div class="radio">
+										  <label><input type="radio" name="optradio" id="day2">Dose by time of day</label>
+									  </div>
+									  <label class="sr-only" for="box2time">Times of doses</label>
+									  <input type="text" class="form-control" id="box2time" placeholder="Time of doses">
+									  <p>hh:mm Example: 06:00,12:00,18:00</p>
+								  </div>
+							  </fieldset> 
+						  </form>
+					  </div>
+					  <div class="col-lg-4 text-center">
+						<img class="img-responsive" src="img/PANDAmini.png">
+					</div>
+					<div class="col-lg-12 text-center">
+						<button type="submit" onclick="submit()" class="btn btn-lg btn-dark">Submit!</a>
+						</div>
 
-                                    <h3><label class="sr-only" for="rx2">Prescription</label>
-                                        <input type="text" class="form-control" id="rx2" placeholder="Prescription"> <h3>
-                                    </div>
-                                    <div class="col-md-4 text-left">
-                                        <div class="radio">
-                                          <label><input type="radio" checked name="optradio" id="dose2">Dose by the hour</label>
-                                      </div>
-                                      <label class="sr-only" for="box2doseh">Hours between doses</label>
-                                      <input type="text" class="form-control" id="box2doseh" placeholder="Hours between doses">
-                                      <p>Example: 5</p>
-                                      <label class="sr-only" for="box2dosem">Minutes between doses</label>
-                                      <input type="text" class="form-control" id="box2dosem" placeholder="Minutes between doses">
-                                      <p>Example: 30</p>
-                                      <label class="sr-only" for="start2">Start Time</label>
-                                      <input type="text" class="form-control" id="start2" placeholder="Start Time">
-                                      <p>24 hour time Example: 06:00</p>
-                                      <div class="radio">
-                                          <label><input type="radio" name="optradio" id="day2">Dose by time of day</label>
-                                      </div>
-                                      <label class="sr-only" for="box2time">Times of doses</label>
-                                      <input type="text" class="form-control" id="box2time" placeholder="Time of doses">
-                                      <p>hh:mm Example: 06:00,12:00,18:00</p>
-                                  </div>
-                              </fieldset> 
-                          </form>
-                      </div>
-                      <div class="col-lg-4 text-center">
-                        <img class="img-responsive" src="img/PANDAmini.png">
-                    </div>
-                    <div class="col-lg-12 text-center">
-                        <button type="submit" onclick="submit()" class="btn btn-lg btn-dark">Submit!</a>
-                        </div>
+					</div>
+				</div>
+			</section>
 
-                    </div>
-                </div>
-            </section>
+			<!--Script that transfers data from the text fields then sends them to the Electric Imp-->
+			<script>
+			function submit() {
+				var rx1 = document.getElementById("rx1").value.trim();
+				var box1doseh = document.getElementById("box1doseh").value.trim();
+				var box1dosem = document.getElementById("box1dosem").value.trim();
+				var start1 = document.getElementById("start1").value.trim();
+				var box1time = document.getElementById("box1time").value.trim(); 
+				var rx2 = document.getElementById("rx2").value.trim();
+				var box2doseh = document.getElementById("box2doseh").value.trim(); 
+				var box2dosem = document.getElementById("box2dosem").value.trim();
+				var start2 = document.getElementById("start2").value.trim();
+				var box2time = document.getElementById("box2time").value.trim(); 
+				var hours1 = document.getElementById("dose1").checked; 
+				var hours2 = document.getElementById("dose2").checked; 
+				var t1, t2; 
+				console.log(rx1); 
+				if (hours1) {
+					console.log(box1dosem); 
+					console.log(start1);
+					t1 = "&topStart=" + start1 + "&topFreqh=" + box1doseh 
+					+ "&topFreqm=" + box1dosem; 
+				}
+				else {
+					console.log(box1time); 
+					t1 = "&topTime=" + box1time; 
+				}
+				console.log(rx2); 
+				if (hours2) {
+					console.log(box2dosem); 
+					console.log(start2); 
+					t2 = "&bottomStart=" + start2 + "&bottomFreqh=" + box2doseh
+					+ "&bottomFreqm=" + box2dosem; 
+				}
+				else {
+					console.log(box2time); 
+					t2 = "&bottomTime=" + box2time; 
+				}
+				var url = "https://agent.electricimp.com/GwKj0KXkZ0CO?";
+				var send = url + "topPrescription=" + rx1 + t1 +
+				"&bottomPrescription=" + rx2 + t2; 
+				console.log(send); 
+				window.open(send); 
+				window.confirm("Thank you for configuring your PANDA"); 
 
-            <!--Script that transfers data from the text fields then sends them to the Electric Imp-->
-            <script>
-            function submit() {
-                var rx1 = document.getElementById("rx1").value.trim();
-                var box1doseh = document.getElementById("box1doseh").value.trim();
-                var box1dosem = document.getElementById("box1dosem").value.trim();
-                var start1 = document.getElementById("start1").value.trim();
-                var box1time = document.getElementById("box1time").value.trim(); 
-                var rx2 = document.getElementById("rx2").value.trim();
-                var box2doseh = document.getElementById("box2doseh").value.trim(); 
-                var box2dosem = document.getElementById("box2dosem").value.trim();
-                var start2 = document.getElementById("start2").value.trim();
-                var box2time = document.getElementById("box2time").value.trim(); 
-                var hours1 = document.getElementById("dose1").checked; 
-                var hours2 = document.getElementById("dose2").checked; 
-                var t1, t2; 
-                console.log(rx1); 
-                if (hours1) {
-                    console.log(box1dosem); 
-                    console.log(start1);
-                    t1 = "&topStart=" + start1 + "&topFreqh=" + box1doseh 
-                    + "&topFreqm=" + box1dosem; 
-                }
-                else {
-                    console.log(box1time); 
-                    t1 = "&topTime=" + box1time; 
-                }
-                console.log(rx2); 
-                if (hours2) {
-                    console.log(box2dosem); 
-                    console.log(start2); 
-                    t2 = "&bottomStart=" + start2 + "&bottomFreqh=" + box2doseh
-                    + "&bottomFreqm=" + box2dosem; 
-                }
-                else {
-                    console.log(box2time); 
-                    t2 = "&bottomTime=" + box2time; 
-                }
-                var url = "https://agent.electricimp.com/GwKj0KXkZ0CO?";
-                var send = url + "topPrescription=" + rx1 + t1 +
-                "&bottomPrescription=" + rx2 + t2; 
-                console.log(send); 
-                window.open(send); 
-                window.confirm("Thank you for configuring your PANDA"); 
-
-            }
-            </script>
-
+			}
+			</script>
 
 
-            <!-- jQuery -->
-            <script src="js/jquery.js"></script>
 
-            <!-- Bootstrap Core JavaScript -->
-            <script src="js/bootstrap.min.js"></script>
+			<!-- jQuery -->
+			<script src="js/jquery.js"></script>
 
-            <!-- Custom Theme JavaScript -->
-            <script>
+			<!-- Bootstrap Core JavaScript -->
+			<script src="js/bootstrap.min.js"></script>
+
+			<!-- Custom Theme JavaScript -->
+			<script>
 
 
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
+	// Closes the sidebar menu
+	$("#menu-close").click(function(e) {
+		e.preventDefault();
+		$("#sidebar-wrapper").toggleClass("active");
+	});
 
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
+	// Opens the sidebar menu
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#sidebar-wrapper").toggleClass("active");
+	});
 
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+	// Scrolls to the selected menu item on the page
+	$(function() {
+		$('a[href*=#]:not([href=#])').click(function() {
+			if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
 
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    </script>
+				var target = $(this.hash);
+				target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+				if (target.length) {
+					$('html,body').animate({
+						scrollTop: target.offset().top
+					}, 1000);
+					return false;
+				}
+			}
+		});
+	});
+	</script>
 
 </body>
 

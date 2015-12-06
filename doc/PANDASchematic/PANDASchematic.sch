@@ -1677,6 +1677,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R5" library="SparkFun-Passives" deviceset="RESISTOR" device="AXIAL-0.3" value="47Ω"/>
 <part name="SUPPLY8" library="supply2" deviceset="GND" device=""/>
 <part name="SUPPLY9" library="supply2" deviceset="GND" device=""/>
+<part name="SUPPLY10" library="supply2" deviceset="GND" device=""/>
+<part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="VDD" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1703,6 +1705,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="R5" gate="G$1" x="71.12" y="71.12" rot="R180"/>
 <instance part="SUPPLY8" gate="GND" x="76.2" y="68.58"/>
 <instance part="SUPPLY9" gate="GND" x="38.1" y="68.58"/>
+<instance part="SUPPLY10" gate="GND" x="104.14" y="50.8"/>
+<instance part="SUPPLY11" gate="VDD" x="35.56" y="40.64"/>
 </instances>
 <busses>
 </busses>
@@ -1736,6 +1740,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="R4" gate="G$1" pin="2"/>
 <pinref part="SUPPLY9" gate="GND" pin="GND"/>
 </segment>
+<segment>
+<pinref part="IC1" gate="A" pin="G"/>
+<pinref part="SUPPLY10" gate="GND" pin="GND"/>
+<wire x1="104.14" y1="53.34" x2="101.6" y2="53.34" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="VDD" class="0">
 <segment>
@@ -1752,6 +1761,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="IC1" gate="A" pin="SCL"/>
 <pinref part="SUPPLY7" gate="VDD" pin="VDD"/>
 <wire x1="104.14" y1="38.1" x2="101.6" y2="38.1" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="LCD1" gate="G$1" pin="VDD"/>
+<pinref part="SUPPLY11" gate="VDD" pin="VDD"/>
+<wire x1="35.56" y1="40.64" x2="33.02" y2="40.64" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$2" class="0">
