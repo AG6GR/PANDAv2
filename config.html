@@ -217,7 +217,7 @@
 							url += "&freqM=" + currentform.freqM.value;
 						} else {
 							// Time list representation
-							url += "&time=" + currentform.time.value;
+							url += "&time=" + currentform.time.value.replace(/ /g, '');
 						}
 						
 						// Make request
