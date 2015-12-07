@@ -52,7 +52,7 @@
 							<a href="index.html">About</a>
 						</li>
 						<li>
-							<a href="test.html">Test it out!</a>
+							<a href="config.html">Configure</a>
 						</li>
 						<li>
 							<a href="applications.html">Applications</a>
@@ -232,51 +232,9 @@
 						}
 						xhttp.open("POST", url, true);
 						xhttp.send(currentform.prescription.value);
+						window.confirm("Thank you for configuring your PANDA");
 					}
 				}
-				/*
-				var rx1 = document.getElementById("rx1").value.trim();
-				var box1doseh = document.getElementById("box1doseh").value.trim();
-				var box1dosem = document.getElementById("box1dosem").value.trim();
-				var start1 = document.getElementById("start1").value.trim();
-				var box1time = document.getElementById("box1time").value.trim(); 
-				var rx2 = document.getElementById("rx2").value.trim();
-				var box2doseh = document.getElementById("box2doseh").value.trim(); 
-				var box2dosem = document.getElementById("box2dosem").value.trim();
-				var start2 = document.getElementById("start2").value.trim();
-				var box2time = document.getElementById("box2time").value.trim(); 
-				var hours1 = document.getElementById("dose1").checked; 
-				var hours2 = document.getElementById("dose2").checked; 
-				var t1, t2; 
-				console.log(rx1); 
-				if (hours1) {
-					console.log(box1dosem); 
-					console.log(start1);
-					t1 = "&topStart=" + start1 + "&topFreqh=" + box1doseh 
-					+ "&topFreqm=" + box1dosem; 
-				}
-				else {
-					console.log(box1time); 
-					t1 = "&topTime=" + box1time; 
-				}
-				console.log(rx2); 
-				if (hours2) {
-					console.log(box2dosem); 
-					console.log(start2); 
-					t2 = "&bottomStart=" + start2 + "&bottomFreqh=" + box2doseh
-					+ "&bottomFreqm=" + box2dosem; 
-				}
-				else {
-					console.log(box2time); 
-					t2 = "&bottomTime=" + box2time; 
-				}
-				var url = "https://agent.electricimp.com/GwKj0KXkZ0CO?";
-				var send = url + "topPrescription=" + rx1 + t1 +
-				"&bottomPrescription=" + rx2 + t2; 
-				console.log(send); 
-				window.open(send); 
-				window.confirm("Thank you for configuring your PANDA"); 
-				*/
 			}
 		</script>
 
