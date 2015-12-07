@@ -1,41 +1,36 @@
 // Agent code for PillBox
 
 const TIME_OFFSET = -5;
+const NUM_PRESCRIPTIONS = 2;
+
 // Prescription objects
-local prescriptionTop;
-local prescriptionBottom;
+local prescription = array(NUM_PRESCRIPTIONS);
 
 // Initialization, run once at start
 function init()
 {
+    // Register box lid event handler
     device.on("box lid event", onBoxLidEvent);
+    // Register HTTP request handler
     http.onrequest(requestHandler);
 }
 // Loop, run once a second
 function loop()
 {
+    // Get current time
     local currentTime = date();
     currentTime.hour = (currentTime.hour + TIME_OFFSET + 24) % 24;
-    //server.log(currentTime.hour);
-    /*if (prescriptionTop != null)
-    {
-        server.log(prescriptionTop.getNextTime().hour);
-        server.log(prescriptionTop.getNextTime().min);
-    }*/
+    
     // Check if it is time to alert for either prescription
-    if (prescriptionTop != null && currentTime.hour == prescriptionTop.getNextTime().hour 
-        && currentTime.min == prescriptionTop.getNextTime().min)
+    for (local i = 0; i < NUM_PRESCRIPTIONS; i++)
     {
-        server.log("Alert for top prescription");
-        sendAlert(true);
-        prescriptionTop.giveDose();
-    }
-    if (prescriptionBottom != null && currentTime.hour == prescriptionBottom.getNextTime().hour 
-        && currentTime.min == prescriptionBottom.getNextTime().min)
-    {
-        server.log("Alert for bottom prescription");
-        sendAlert(false);
-        prescriptionBottom.giveDose();
+        if (prescription[i] != null && currentTime.hour == prescription[i].getNextTime().hour 
+            && currentTime.min == prescription[i].getNextTime().min)
+        {
+            server.log("Alert for prescription " + i);
+            sendAlert(i);
+            prescription[i].giveDose();
+        }
     }
     imp.wakeup(1, loop);
 }
@@ -73,21 +68,23 @@ function requestHandler(request, response)
         if ("demo" in request.query) 
         {
             if ("top" in request.query)
-                sendAlert(true);
+                sendAlert(0);
             if ("bottom" in request.query)
-                sendAlert(false);
+                sendAlert(1);
         }
         else
         {
             // Set prescriptions
-            if ("topPrescription" in request.query && request.query.topPrescription != "")
+            if ("id" in request.query && request.query.id != "")
             {
-                if ("topTime" in request.query)
+                server.log("Request for id: " + request.query.id);
+                local idNum = request.query.id.tointeger();
+                if ("time" in request.query && request.query.time != "")
                 {
                     // List of times
-                    server.log("Setting prescription top to a List prescription");
-                    responseText += ("topTime=" + request.query.topTime + "\n");
-                    local timeStringList = split(request.query.topTime, ",");
+                    server.log("Setting prescription " + idNum + " to a List prescription");
+                    responseText += ("time=" + request.query.time + "\n");
+                    local timeStringList = split(request.query.time, ",");
                     local timeIntList = array();
                     foreach(input in timeStringList)
                     {
@@ -95,72 +92,41 @@ function requestHandler(request, response)
                     }
                     if (timeIntList.len() == 1)
                     {
-                        server.log("Special case: Setting prescription bottom to a Freq prescription with period 24h");
-                        prescriptionTop = PrescriptionFreq(timeIntList[0], 23, 59);
+                        server.log("Special case: Setting prescription to a Freq prescription with period 24h");
+                        prescription[idNum] = PrescriptionFreq(timeIntList[0], 23, 59);
                     }
                     else
                     {
-                        prescriptionTop = PrescriptionList(timeIntList);
+                        prescription[idNum] = PrescriptionList(timeIntList);
                     }
                 }
-                else if("topStart" in request.query && "topFreqm" in request.query && "topFreqh" in request.query)
+                else if("start" in request.query && "freqM" in request.query && "freqH" in request.query)
                 {
                     // Start time + frequency
-                    server.log("Setting prescription top to a Freq prescription");
-                    responseText += ("topStart=" + request.query.topStart + "\n");
-                    responseText += ("topFreqm=" + request.query.topFreqm + "\n");
-                    responseText += ("topFreqh=" + request.query.topFreqh + "\n");
-                    prescriptionTop = PrescriptionFreq(stringToTime(request.query.topStart), 
-                        (request.query.topFreqh !="") ? request.query.topFreqh.tointeger() : 0,
-                        (request.query.topFreqm !="") ? request.query.topFreqm.tointeger() : 0);
+                    server.log("Setting prescription "+ idNum + " to a Freq prescription");
+                    responseText += ("start=" + request.query.start + "\n");
+                    responseText += ("freqM=" + request.query.freqM + "\n");
+                    responseText += ("freqH=" + request.query.freqH + "\n");
+                    prescription[idNum] = PrescriptionFreq(stringToTime(request.query.start), 
+                        (request.query.freqH !="") ? request.query.freqH.tointeger() : 0,
+                        (request.query.freqM !="") ? request.query.freqM.tointeger() : 0);
                 }
                 else
                 {
-                    server.log("Invalid Top Prescription");
+                    server.log("Invalid Prescription " + request.query.id);
                 }
             }
-            if ("bottomPrescription" in request.query && request.query.bottomPrescription != "")
+            else
             {
-                if ("bottomTime" in request.query)
-                {
-                    server.log("Setting prescription bottom to a List prescription");
-                    responseText += ("bottomTime=" + request.query.bottomTime + "\n");
-                    local timeStringList = split(request.query.bottomTime, ",");
-                    local timeIntList = array();
-                    foreach(input in timeStringList)
-                    {
-                        timeIntList.append(stringToTime(input));
-                    }
-                    if (timeIntList.len() == 1)
-                    {
-                        server.log("Special case: Setting prescription bottom to a Freq prescription with period 24h");
-                        prescriptionBottom = PrescriptionFreq(timeIntList[0], 23, 59);
-                    }
-                    else
-                    {
-                        prescriptionBottom = PrescriptionList(timeIntList);
-                    }
-                }
-                else if("bottomStart" in request.query && "bottomFreqm" in request.query && "bottomFreqh" in request.query)
-                {
-                    server.log("Setting prescription bottom to a Freq prescription");
-                    responseText += ("bottomStart=" + request.query.bottomStart + "\n");
-                    responseText += ("bottomFreqm=" + request.query.bottomFreqm + "\n");
-                    responseText += ("bottomFreqh=" + request.query.bottomFreqh + "\n");
-                    prescriptionBottom = PrescriptionFreq(stringToTime(request.query.bottomStart), 
-                        (request.query.bottomFreqh !="") ? request.query.bottomFreqh.tointeger() : 0,
-                        (request.query.bottomFreqm !="") ? request.query.bottomFreqm.tointeger() : 0);
-                }
-                else
-                {
-                    server.log("Invalid Bottom Prescription");
-                }
+                server.log("No ID found");
             }
         }
         server.log("Response text: " + responseText);
+        response.header("Access-Control-Allow-Origin", "*");
         response.send(200, responseText);
     } catch (ex) {
         response.send(500, ("Agent Error: " + ex)); // Send 500 response if error occured
+        server.log("Exception: " + ex);
     }
 }
 // Tell device to start an alert, boolean isTop indicates which prescription
