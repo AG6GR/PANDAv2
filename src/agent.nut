@@ -1,10 +1,13 @@
 // Agent code for PillBox
 
+/* ----- Constants ----- */
 const TIME_OFFSET = -5;
 const NUM_PRESCRIPTIONS = 2;
 
-// Prescription objects
-local prescription = array(NUM_PRESCRIPTIONS);
+/* ----- Local Variables ----- */
+local prescription = array(NUM_PRESCRIPTIONS); // Stores prescription objects
+
+/* ----- Functions ----- */
 
 // Initialization, run once at start
 function init()
@@ -28,16 +31,18 @@ function loop()
             && currentTime.min == prescription[i].getNextTime().min)
         {
             server.log("Alert for prescription " + i);
-            sendAlert(i);
+            sendAlert(i, prescription[i].getText());
             prescription[i].giveDose();
         }
     }
     imp.wakeup(1, loop);
 }
 
-// Event Handlers
-
-// Called when box lid state changes, boolean isOpen corresponds to lid state
+/*
+ * Event handler for box lid state changes.
+ * 
+ * isOpen: boolean corresponding to lid state
+ */
 function onBoxLidEvent(isOpen)
 {
     if (isOpen)
@@ -49,7 +54,13 @@ function onBoxLidEvent(isOpen)
         server.log("Box has been closed");
     }
 }
-// Converts a String in "HH:MM" format to at table in date() format
+
+/*
+ * Converts a String input in "HH:MM" format to at table in date() format
+ *
+ * Returns: A table with the keys "hour" and "min" corresponding the hours and
+ *          minutes specified by input.
+ */
 function stringToTime(input)
 {
     local timeTable = {};
@@ -57,7 +68,10 @@ function stringToTime(input)
     timeTable.min <- input.slice(3,5).tointeger();
     return timeTable;
 }
-// HTTP request handler
+
+/*
+ * HTTP request handler
+ */
 function requestHandler(request, response)
 {
     server.log("Request received");
@@ -68,9 +82,9 @@ function requestHandler(request, response)
         if ("demo" in request.query) 
         {
             if ("top" in request.query)
-                sendAlert(0);
+                sendAlert(0, "0");
             if ("bottom" in request.query)
-                sendAlert(1);
+                sendAlert(1, "1");
         }
         else
         {
@@ -93,11 +107,11 @@ function requestHandler(request, response)
                     if (timeIntList.len() == 1)
                     {
                         server.log("Special case: Setting prescription to a Freq prescription with period 24h");
-                        prescription[idNum] = PrescriptionFreq(timeIntList[0], 23, 59);
+                        prescription[idNum] = PrescriptionFreq(timeIntList[0], 23, 59, request.body);
                     }
                     else
                     {
-                        prescription[idNum] = PrescriptionList(timeIntList);
+                        prescription[idNum] = PrescriptionList(timeIntList, request.body);
                     }
                 }
                 else if("start" in request.query && "freqM" in request.query && "freqH" in request.query)
@@ -109,7 +123,8 @@ function requestHandler(request, response)
                     responseText += ("freqH=" + request.query.freqH + "\n");
                     prescription[idNum] = PrescriptionFreq(stringToTime(request.query.start), 
                         (request.query.freqH !="") ? request.query.freqH.tointeger() : 0,
-                        (request.query.freqM !="") ? request.query.freqM.tointeger() : 0);
+                        (request.query.freqM !="") ? request.query.freqM.tointeger() : 0,
+                        request.body);
                 }
                 else
                 {
@@ -129,22 +144,37 @@ function requestHandler(request, response)
         server.log("Exception: " + ex);
     }
 }
-// Tell device to start an alert, boolean isTop indicates which prescription
-function sendAlert(isTop)
+
+/* 
+ * Tells device to start an alert for a specified LED.
+ * 
+ * id: integer id of prescription to alert for.
+ * text: string to display
+ */
+function sendAlert(id, text)
 {
     server.log("Sending alert");
-    device.send("Alert", isTop)
+    device.send("Alert", [id, text])
 }
 
-// A list-type prescription, which calculates doses based on a list of times
+/* A list-type prescription, which calculates doses based on a list of times */
 class PrescriptionList
 {
-    _currentIndex = -1;
-    _timeList = null;
+    _currentIndex = -1; // Index of the next scheduled alert time
+    _timeList = null;   // List of times to alert on
+    _text = "";         // Text corresponding to this prescription
     
-    constructor(timeList) 
+    /*
+     * Constructs a new list-type prescription. 
+     *
+     * timeList: Array of date() style tables containing the hour and min of the
+     *           times when an alert is scheduled for this prescription.
+     * text: String to display for this prescription
+     */
+    constructor(timeList, text) 
     {
         _timeList = timeList;
+        _text = text;
         local currentDate = date();
         currentDate.hour = (currentDate.hour + TIME_OFFSET + 24) % 24;
         // If the current time is after the last time in the list, use the first in the list
@@ -158,7 +188,14 @@ class PrescriptionList
             for (_currentIndex = 0; compareDate(timeList[_currentIndex], currentDate); _currentIndex++);
         }
     }
-    // Tests if a time1 is before time2
+    /*
+     * Tests if time1 is before time2
+     *
+     * time1, time2: date() style tables specifying an hour and min to compare.
+     *
+     * Returns: boolean true if the time represented by time1 is before the time
+     *          represented by time2, false otherwise.
+     */
     function compareDate(time1, time2)
     {
         if (time1.hour == time2.hour)
@@ -166,34 +203,83 @@ class PrescriptionList
         else
             return time1.hour < time2.hour
     }
+    /* 
+     * Returns the time of the next scheduled dose.
+     *
+     * Returns: A table with the keys "hour" and "min" corresponding the hour 
+     *          and minute of the next scheduled dose.
+     */
     function getNextTime()
     {
         return _timeList[_currentIndex];
     }
+    /*
+     * Gives a dose, causing the prescription to advance to the next scheduled
+     * alert time.
+     */
     function giveDose()
     {
         // Calculate time for next dose
         _currentIndex = (_currentIndex + 1) % _timeList.len();
         return _timeList[_currentIndex];
     }
+    /*
+     * Returns the text associated with this prescription.
+     */
+    function getText()
+    {
+        return _text;
+    }
 }
-// A frequency-type prescription, which calculates doses based on a set time between doses
+
+/* 
+ * A frequency-type prescription, which calculates doses based on a fixed time 
+ * between doses.
+ */
 class PrescriptionFreq
 {
-    _nextDose = -1;
-    _freqHours = 0;
-    _freqMinutes = 0;
+    _nextDose = -1; // Time of next dose
+    _freqHours = 0; // Number of hours between doses
+    _freqMinutes = 0; // Number of minutes between doses
+    _text = ""; // Text corresponding to this prescription
     
-    constructor(nextDose, freqHours, freqMinutes) 
+    /*
+     * Constructs a new frequency-type prescription. 
+     *
+     * nextDose: date() style table containing the hour and min of the starting
+     *           dose time.
+     * freqHours: integer number of hours between doses
+     * freqMinutes: integer number of minutes between doses
+     * text: String to display for this prescription
+     */
+    constructor(nextDose, freqHours, freqMinutes, text) 
     {
         _nextDose = nextDose;
         _freqHours = freqHours;
         _freqMinutes = freqMinutes;
+        _text = text;
     }
+    /*
+     * Returns the text associated with this prescription.
+     */
+    function getText()
+    {
+        return _text;
+    }
+    /* 
+     * Returns the time of the next scheduled dose.
+     *
+     * Returns: A table with the keys "hour" and "min" corresponding the hour 
+     *          and minute of the next scheduled dose.
+     */
     function getNextTime()
     {
         return _nextDose;
     }
+    /*
+     * Gives a dose, causing the prescription to advance to the next scheduled
+     * alert time.
+     */
     function giveDose()
     {
         // Calculate time for next dose

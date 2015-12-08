@@ -1747,6 +1747,8 @@ Big oval pads</description>
 <part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="VDD" device=""/>
 <part name="T1" library="adafruit" deviceset="2N2222" device=""/>
 <part name="SUPPLY12" library="SparkFun-Aesthetics" deviceset="VDD" device=""/>
+<part name="R2" library="SparkFun-Passives" deviceset="RESISTOR" device="AXIAL-0.3" value="68Ω"/>
+<part name="R6" library="SparkFun-Passives" deviceset="RESISTOR" device="AXIAL-0.3" value="68Ω"/>
 </parts>
 <sheets>
 <sheet>
@@ -1784,6 +1786,8 @@ Big oval pads</description>
 <attribute name="VALUE" x="129.54" y="45.72" size="1.778" layer="96"/>
 </instance>
 <instance part="SUPPLY12" gate="VDD" x="119.38" y="63.5"/>
+<instance part="R2" gate="G$1" x="58.42" y="20.32" rot="R180"/>
+<instance part="R6" gate="G$1" x="71.12" y="17.78" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -1853,13 +1857,13 @@ Big oval pads</description>
 </net>
 <net name="N$2" class="0">
 <segment>
-<pinref part="LCD1" gate="G$1" pin="SCLK"/>
 <pinref part="U1" gate="G$1" pin="5(SCLK1/SCLK2/TX2)"/>
-<wire x1="33.02" y1="20.32" x2="106.68" y2="20.32" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="A" pin="SCK"/>
 <wire x1="106.68" y1="20.32" x2="121.92" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="35.56" x2="106.68" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="35.56" x2="106.68" y2="20.32" width="0.1524" layer="91"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="63.5" y1="20.32" x2="106.68" y2="20.32" width="0.1524" layer="91"/>
 <junction x="106.68" y="20.32"/>
 </segment>
 </net>
@@ -1897,11 +1901,11 @@ Big oval pads</description>
 <segment>
 <pinref part="IC1" gate="A" pin="SER"/>
 <wire x1="101.6" y1="30.48" x2="104.14" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="LCD1" gate="G$1" pin="SDIN"/>
 <pinref part="U1" gate="G$1" pin="7(MOSI1/MISO2/RX2)"/>
-<wire x1="33.02" y1="17.78" x2="104.14" y2="17.78" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="17.78" x2="121.92" y2="17.78" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="30.48" x2="104.14" y2="17.78" width="0.1524" layer="91"/>
+<pinref part="R6" gate="G$1" pin="1"/>
+<wire x1="76.2" y1="17.78" x2="104.14" y2="17.78" width="0.1524" layer="91"/>
 <junction x="104.14" y="17.78"/>
 </segment>
 </net>
@@ -1981,6 +1985,20 @@ Big oval pads</description>
 <wire x1="40.64" y1="40.64" x2="78.74" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="LED1" gate="G$1" pin="AG"/>
 <wire x1="40.64" y1="60.96" x2="40.64" y2="40.64" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$16" class="0">
+<segment>
+<pinref part="LCD1" gate="G$1" pin="SCLK"/>
+<pinref part="R2" gate="G$1" pin="2"/>
+<wire x1="33.02" y1="20.32" x2="53.34" y2="20.32" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<pinref part="LCD1" gate="G$1" pin="SDIN"/>
+<pinref part="R6" gate="G$1" pin="2"/>
+<wire x1="33.02" y1="17.78" x2="66.04" y2="17.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
