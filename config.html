@@ -77,7 +77,7 @@
 				<form id="prescription0">
 					<fieldset>
 						<div class="col-md-3 text-right">
-							<h3>Box 1: </h3>
+							<h3>Prescription 1: </h3>
 						</div>
 						<div class="col-md-3">
 							<h3><label class="sr-only" for="rx1">Prescription</label></h3>
@@ -130,7 +130,57 @@
 				<form id="prescription1">
 					<fieldset>
 						<div class="col-md-3 text-right">
-							<h3>Box 2: </h3>
+							<h3>Prescription 2: </h3>
+						</div>
+						<div class="col-md-3">
+							<h3><label class="sr-only" for="rx1">Prescription</label></h3>
+							<textarea class="form-control" style="resize:none" rows="4" name="prescription" id="prescription" placeholder="Prescription"></textarea>
+						</div>
+						<div class="col-md-3 text-left">
+							<!-- Dose by the hour -->
+							<div class="radio" >
+								<label>
+									<input type="radio" checked name="type" id="typehour" value="hour">
+									Dose by the hour
+								</label>
+							</div>
+							
+							<label class="sr-only" for="box1doseh">Hours between doses</label>
+							<input type="text" class="form-control" name="freqH" id="box1doseh" placeholder="Hours between doses">
+							<p>Example: 5</p>
+							
+							<input type="text" class="form-control" name="freqM" id="box1dosem" placeholder="Minutes between doses">
+							<p>Example: 30</p>
+							
+							<label class="sr-only" for="start1">Start Time</label>
+							<input type="text" class="form-control" name="start" id="start1" placeholder="Start Time">
+							<p>24 hour time Example: 06:00</p>
+							
+							<!-- Dose by time -->
+							<div class="radio">
+								<label>
+									<input type="radio" name="type" id="typetime" value="time">
+									Dose by time of day
+								</label>
+							</div>
+							
+							<label class="sr-only" for="box1time">Times for doses</label>
+							<input type="text" class="form-control" name="time" id="box1time" placeholder="Time of doses">
+							<p>hh:mm Example: 06:00,12:00,18:00</p>
+							
+						</div>
+						<div class="col-md-3">
+							
+						</div>
+					</fieldset> 
+				</form>
+			</div>
+			<!-- Prescription 2 -->
+			<div class="row">	
+				<form id="prescription1">
+					<fieldset>
+						<div class="col-md-3 text-right">
+							<h3>Prescription 3: </h3>
 						</div>
 						<div class="col-md-3">
 							<h3><label class="sr-only" for="rx1">Prescription</label></h3>

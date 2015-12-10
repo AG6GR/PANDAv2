@@ -10,7 +10,7 @@ pinPhotocell <- hardware.pin9;
 /* ----- Constants ----- */
 const LIGHT_THRESH = 50000;
 const BUZZER_PERIOD = 0.0005;
-const NUM_LEDS = 2;
+const NUM_LEDS = 3;
 
 // LCD constants
 const LCD_COMMAND = 0;
@@ -25,6 +25,8 @@ const LED0_GREEN = 0x10;
 const LED0_RED = 0x20;
 const LED1_GREEN = 0x40;
 const LED1_RED = 0x80;
+const LED2_GREEN = 0x04;
+const LED2_RED = 0x08;
 
 // State machine states
 const STATE_OPEN = 1;
@@ -212,6 +214,7 @@ function init()
     // LEDs
     leds[0] = LED(false, LED0_GREEN, LED0_RED);
     leds[1] = LED(false, LED1_GREEN, LED1_RED);
+    leds[2] = LED(false, LED2_GREEN, LED2_RED);
     
     // SPI
     spiBus.configure(SIMPLEX_TX | MSB_FIRST | CLOCK_IDLE_LOW, 1);

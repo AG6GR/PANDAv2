@@ -1,6 +1,6 @@
 *.nut~
 *~
 *#
-*#1
+doc/PANDASchematic/*#*
 *#2
 .DS_Store

@@ -1,8 +1,14 @@
 // Agent code for PillBox
 
+/*
+ * TODO
+ *
+ * Remove About from navbar
+ */
+
 /* ----- Constants ----- */
 const TIME_OFFSET = -5;
-const NUM_PRESCRIPTIONS = 2;
+const NUM_PRESCRIPTIONS = 3;
 
 /* ----- Local Variables ----- */
 local prescription = array(NUM_PRESCRIPTIONS); // Stores prescription objects
@@ -78,16 +84,50 @@ function requestHandler(request, response)
     try 
     {
         local responseText = "OK\n"
-        // Demo
-        if ("demo" in request.query) 
+        response.header("Access-Control-Allow-Origin", "*");
+        
+        if (request.method == "GET")
         {
-            if ("top" in request.query)
-                sendAlert(0, "0");
-            if ("bottom" in request.query)
-                sendAlert(1, "1");
+            server.log("GET request");
+            if ("id" in request.query)
+            {
+                // Return next time for that id
+                local id = request.query.id.tointeger();
+                if (id > NUM_PRESCRIPTIONS - 1 || id < 0)
+                {
+                    response.send(400, "Invalid id");
+                }
+                else if (prescription[id] == null)
+                {
+                    response.send(200, "Not Configured");
+                }
+                else
+                {
+                    local timeTable = prescription[id].getNextTime()
+                    local text = timeTable.hour + ":";
+                    text += timeTable.min < 10 ? "0" + timeTable.min : timeTable.min;
+                    response.send(200, text);
+                }
+            }
+            else if ("demo" in request.query) 
+            {
+                // Demo mode
+                if ("top" in request.query)
+                    sendAlert(0, "0");
+                if ("bottom" in request.query)
+                    sendAlert(1, "1");
+                response.send(200, "OK");
+            }
+            else
+            {
+                // Bad request
+                server.log("Invalid GET");
+                response.send(400, "Invalid GET");
+            }
         }
         else
         {
+            server.log("POST request");
             // Set prescriptions
             if ("id" in request.query && request.query.id != "")
             {
@@ -97,7 +137,6 @@ function requestHandler(request, response)
                 {
                     // List of times
                     server.log("Setting prescription " + idNum + " to a List prescription");
-                    responseText += ("time=" + request.query.time + "\n");
                     local timeStringList = split(request.query.time, ",");
                     local timeIntList = array();
                     foreach(input in timeStringList)
@@ -118,9 +157,6 @@ function requestHandler(request, response)
                 {
                     // Start time + frequency
                     server.log("Setting prescription "+ idNum + " to a Freq prescription");
-                    responseText += ("start=" + request.query.start + "\n");
-                    responseText += ("freqM=" + request.query.freqM + "\n");
-                    responseText += ("freqH=" + request.query.freqH + "\n");
                     prescription[idNum] = PrescriptionFreq(stringToTime(request.query.start), 
                         (request.query.freqH !="") ? request.query.freqH.tointeger() : 0,
                         (request.query.freqM !="") ? request.query.freqM.tointeger() : 0,
@@ -129,16 +165,15 @@ function requestHandler(request, response)
                 else
                 {
                     server.log("Invalid Prescription " + request.query.id);
+                    response.send(400, "Invalid Prescription " + request.query.id);
                 }
             }
             else
             {
                 server.log("No ID found");
+                response.send(400, "No ID found");
             }
         }
-        server.log("Response text: " + responseText);
-        response.header("Access-Control-Allow-Origin", "*");
-        response.send(200, responseText);
     } catch (ex) {
         response.send(500, ("Agent Error: " + ex)); // Send 500 response if error occured
         server.log("Exception: " + ex);
