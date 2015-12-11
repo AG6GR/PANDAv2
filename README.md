@@ -26,7 +26,7 @@ I first tackled this problem with a partner during the Fall 2015 HackPrinceton h
 
 <img src=/doc/OverviewOpen.jpg width="400">
 
-PANDA is built around the Electric Imp platform. All processing is done by the imp001 module held in an April breakout board. A ribbon cable connects the pins of the April breakout board to a header on the protoboard where the other components are soldered.
+PANDA is built around the Electric Imp platform. All processing is done by the imp001 module held in an April breakout board. A ribbon cable connects the pins of the April breakout board to a header on the protoboard where the other components are soldered. EAGLE schematics and a [Bill of Materials](https://github.com/AG6GR/PANDAv2/blob/gh-pages/doc/BillOfMaterials.csv) for the electronics of PANDA are available in the `doc` directory.
 
 The enclosure for PANDA is a repurposed cardboard box, with the dividers for the electronics and medicine created from thinner recycled card stock. The PANDA logos were printed out using a standard color printer and glued onto the enclosure. Overall, the mechanical design was aimed at reducing cost and reusing available materials whenever possible.
 
