@@ -8,7 +8,7 @@
 
 <img src=/img/PANDA.png width="300">
 
-PANDA is a smart pillbox that reminds you when to take your medicine! Using the web interface, you can tell PANDA when to remind you. PANDA can take either a list of times or set period between reminders.
+PANDA is a smart pillbox that reminds you when to take your medicine! Using the web interface, you can tell PANDA what medicines you are taking and when to remind you.
 
 <img src=/doc/Closed.jpg width="400"><img src=/doc/Open.jpg width="400">
 
@@ -18,9 +18,9 @@ Once it is time to take your medication, PANDA will start beeping and light up t
 
 Everyone has taken medications at some point in their life. According to a report by the [Kaiser Family Foundation](http://kff.org/other/state-indicator/total-retail-rx-drugs/), over 4 billion prescriptions were filled in 2014. Maybe it was antibiotics for an infection, statins for managing cholesterol levels, or just daily vitamins or supplements. What is in common for all of these medications is that they need to be taken at regular intervals for an extended period of time. 
 
-Based on my own personal experience and the experiences of my parents and other people around me, I know the worry and frustration involved in keeping track of when to take medication. It is easy to forget to take a pill in the morning, or even worse, to accidentally take an extra dose. When someone is sick, the last thing they want to be worrying about is when to take their vital medications.
+Based on my own personal experience and the experiences of my parents and other people around me, I know the worry and frustration involved in keeping track of when to take medication. Beyond the inconvenience of managing multiple complex prescriptions, mistakes can have serious consequences. It is easy to forget to take a pill, or even worse, to accidentally take an extra dose. Approximately 44 people die from accidental overdoses every day in the US (Source: [CDC](http://www.cdc.gov/drugoverdose/data/overdose.html)). Many of these overdoses are unnecessary deaths which can be easily prevented. When someone is sick, the last thing they want to be worrying about is when to take their vital medications. PANDA aims to use the power of IoT technology to help solve this important issue.
 
-I first tackled this probelm with a partner during the Fall 2015 HackPrinceton hackathon. We developed PANDA, a smart, user-friendly pillbox powered by Electric Imp. PANDA can be configured remotely with a web interface, after which it will automatically notify the user whenever it is time to take medicine. After the hackathon, I extended PANDA to create PANDA v2, overhauling the user interface and backend software as well as expanding the physical PANDA device. A basic overview of the technical details under the hood of PANDA is provided in the sections below.
+I first tackled this problem with a partner during the Fall 2015 HackPrinceton hackathon. We developed PANDA, a smart, user-friendly pillbox powered by Electric Imp. PANDA can be configured remotely with a web interface, after which it will automatically notify the user whenever it is time to take medicine. After the hackathon, I extended PANDA to create PANDA v2, overhauling the user interface and backend software as well as expanding the physical PANDA device. A basic overview of the technical details under the hood of PANDA is provided in the sections below.
 
 # Hardware
 
@@ -28,9 +28,14 @@ I first tackled this probelm with a partner during the Fall 2015 HackPrinceton h
 
 PANDA is built around the Electric Imp platform. All processing is done by the imp001 module held in an April breakout board. A ribbon cable connects the pins of the April breakout board to a header on the protoboard where the other components are soldered.
 
-The enclosure for PANDA is a repurposed cardboard box, with the dividers for the electronics and medicine created from thinner recycled cardstock. The PANDA logos were printed out using a standard color printer and glued onto the enclosure. Overall, the mechanical design was aimed at reducing cost and reusing available materials whenever possible.
+The enclosure for PANDA is a repurposed cardboard box, with the dividers for the electronics and medicine created from thinner recycled card stock. The PANDA logos were printed out using a standard color printer and glued onto the enclosure. Overall, the mechanical design was aimed at reducing cost and reusing available materials whenever possible.
 
-## Analog Electronics
+Major changes in PANDAv2:
+* Added shift register for improved scalability
+* Added third medicine slot (and corresponding LED)
+* Transistor driver for buzzer
+
+## Electronics
 <img src=/doc/LEDSchematic.png>
 
 <img src=/doc/BoardTop.jpg width="400"><img src=/doc/BoardBottom.jpg width="400">
@@ -46,6 +51,14 @@ Each medicine slot has a corresponding bicolor common-cathode LED which lights u
 # Software
 
 PANDA can be configured using a [web interface](http://ag6gr.github.io/PANDA/), created using Bootstrap and Javascript. The web interface communicates with the Electric Imp servers using http requests. Timekeeping, request handling, and alert triggering are managed by the server side of the Electric Imp. The device is notified of alerts using the standard message passing functionality built into the Electric Imp platform. Source code is available on [Github](https://github.com/AG6GR/PANDAv2).
+
+Major changes in PANDAv2:
+* Added "Next Scheduled Doses" display to web interface
+* Rewrite of web interface Javascript
+* Formalized device state machine
+* Expanded agent HTTP request handling
+* Modularized representation of prescriptions and LEDs for scalability
+* General code cleanup
 
 ## Electric Imp
 
@@ -73,7 +86,7 @@ Every second, a polling loop fetches the current time and checks if any of the p
 
 ## Web Interface
 
-The web interface was contructed using the [Bootstrap framework](http://getbootstrap.com/) and Javascript. 
+The web interface was constructed using the [Bootstrap framework](http://getbootstrap.com/) and Javascript. 
 
 ### Main Page
 When the main page is loaded, a Javascript script fetches the next scheduled alert times for each prescription using GET requests. The body of the response is then displayed under the corresponding label.
@@ -81,7 +94,7 @@ When the main page is loaded, a Javascript script fetches the next scheduled ale
 ### Configuration Page
 The configuration page features a series of forms, one for each prescription. A prescription is assumed to be active if a name or description is given. The user has the option of selecting between two different ways to set the alert times using radio buttons. One is based on a fixed interval between doses, where the user specifies a start time and the time between doses in hours and minutes. Alternatively, the user can provide a comma separated list of times to be alerted.
 
-When the submit button is clicked, a script sends a POST request for each filled-out prescription with the configuration paramemters passed through the URL query string and the name/description of the prescription passed in the body of the POST request.
+When the submit button is clicked, a script sends a POST request for each filled-out prescription with the configuration parameters passed through the URL query string and the name/description of the prescription passed in the body of the POST request.
 
 # Next Steps
 
