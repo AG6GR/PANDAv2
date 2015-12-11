@@ -91,10 +91,17 @@ The web interface was constructed using the [Bootstrap framework](http://getboot
 ### Main Page
 When the main page is loaded, a Javascript script fetches the next scheduled alert times for each prescription using GET requests. The body of the response is then displayed under the corresponding label.
 
+Example GET request format: 
+* Fetch time for prescription id number #: `https://agent.electricimp.com/AGENTID?id=#`
+
 ### Configuration Page
 The configuration page features a series of forms, one for each prescription. A prescription is assumed to be active if a name or description is given. The user has the option of selecting between two different ways to set the alert times using radio buttons. One is based on a fixed interval between doses, where the user specifies a start time and the time between doses in hours and minutes. Alternatively, the user can provide a comma separated list of times to be alerted.
 
 When the submit button is clicked, a script sends a POST request for each filled-out prescription with the configuration parameters passed through the URL query string and the name/description of the prescription passed in the body of the POST request.
+
+Example POST request formats:
+* Time List style prescription: `https://agent.electricimp.com/AGENTID?id=#&time=HH:MM,HH:MM,HH:MM...`
+* Start and Frequency style prescription: `https://agent.electricimp.com/AGENTID?id=#&start=HH:MM&freqH=##&freqM=##`
 
 # Next Steps
 
