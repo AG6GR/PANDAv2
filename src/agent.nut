@@ -1,11 +1,5 @@
 // Agent code for PillBox
 
-/*
- * TODO
- *
- * Remove About from navbar
- */
-
 /* ----- Constants ----- */
 const TIME_OFFSET = -5;
 const NUM_PRESCRIPTIONS = 3;
@@ -62,7 +56,8 @@ function onBoxLidEvent(isOpen)
 }
 
 /*
- * Converts a String input in "HH:MM" format to at table in date() format
+ * Converts a String input in "HH:MM" or "H:MM" format to at table in date() 
+ * format
  *
  * Returns: A table with the keys "hour" and "min" corresponding the hours and
  *          minutes specified by input.
@@ -70,8 +65,22 @@ function onBoxLidEvent(isOpen)
 function stringToTime(input)
 {
     local timeTable = {};
-    timeTable.hour <- input.slice(0,2).tointeger();
-    timeTable.min <- input.slice(3,5).tointeger();
+    if (input.len() == 5)
+    {
+        // HH:MM
+        timeTable.hour <- input.slice(0,2).tointeger();
+        timeTable.min <- input.slice(3,5).tointeger();
+    }
+    else if (input.len() == 4)
+    {
+        // H:MM
+        timeTable.hour <- input.slice(0,1).tointeger();
+        timeTable.min <- input.slice(2,4).tointeger();
+    }
+    else
+    {
+        return null;
+    }
     return timeTable;
 }
 
@@ -83,7 +92,10 @@ function requestHandler(request, response)
     server.log("Request received");
     try 
     {
-        local responseText = "OK\n"
+        // Default text
+        local responseText = "OK\n";
+        
+        // Allow all origins
         response.header("Access-Control-Allow-Origin", "*");
         
         if (request.method == "GET")
@@ -175,7 +187,8 @@ function requestHandler(request, response)
             }
         }
     } catch (ex) {
-        response.send(500, ("Agent Error: " + ex)); // Send 500 response if error occured
+        // Send 500 response if error occured
+        response.send(500, ("Agent Error: " + ex)); 
         server.log("Exception: " + ex);
     }
 }
